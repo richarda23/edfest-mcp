@@ -5,20 +5,41 @@ from fastmcp import FastMCP
 import edfestcli
 
 
-def call_edfest_api() -> Dict:
-    cli = edfestcli.EdFestCli()
-    return cli.events({"year": "2025"})
-
-
-def main():
-    print("Hello from edfringe-mcp!")
+cli = edfestcli.EdFestCli()
 
 
 mcp = FastMCP("My MCP Server")
 
 
+@mcp.tool(description="Search Edinburgh festival venues")
+def edinburgh_festival_venues(
+    festival: str = "international",
+    postcode: str = None,
+    name: str = None,
+    year: str = "2025",
+) -> Dict:
+    """
+    Searches Edinburgh festival venues.
+    :param festival: The type of festival to search for venues in.
+    :param postcode: The postcode to filter venues by.
+    :param name: The name of the venue to search for.
+    :param year: The year of the festival.
+    :return: A dictionary containing venue information.
+    """
+    params = {
+        "festival": festival,
+        "year": year,
+        "postcode": postcode,
+        "name": name,
+    }
+    filtered_params = {k: v for k, v in params.items() if v}
+
+    results = cli.venues(filtered_params)
+    return results
+
+
 @mcp.tool()
-def search_edinburgh_festivals(
+def edinburgh_festival_events(
     datetime_from="2025-09-01",
     datetime_to="2025-09-01",
     festival="international",
@@ -27,7 +48,7 @@ def search_edinburgh_festivals(
     search_text=None,
     title=None,
     artist=None,
-):
+) -> Dict:
     """
     Searches this year's Edinburgh festival events.
     :param datetime_from: An optional ISO8601-like timestamp. e.g. '2025-08-12 00:00:00'
@@ -43,8 +64,8 @@ def search_edinburgh_festivals(
     params = {
         "festival": festival,
         "year": "2025",
-        "date_from": datetime_from.replace("T", " "),  # optional
-        "date_to": datetime_to.replace("T", " "),  # not included if None
+        "date_from": datetime_from.replace("T", " "),
+        "date_to": datetime_to.replace("T", " "),
         "genre": genre,
         "venue_name": venue_name,
         "description": search_text,
@@ -53,7 +74,6 @@ def search_edinburgh_festivals(
     }
     filtered_params = {k: v for k, v in params.items() if v}
 
-    cli = edfestcli.EdFestCli()
     results = cli.events(filtered_params)
     # for r in results:
     #     del r['images']
@@ -61,5 +81,4 @@ def search_edinburgh_festivals(
 
 
 if __name__ == "__main__":
-    print("Starting edfringe-mcp..." + mcp.name)
     mcp.run()

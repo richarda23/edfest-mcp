@@ -22,7 +22,7 @@ class EdFestCli:
         return self._send_request("events", params)
 
     def venues(self, params: Dict):
-        self._send_request("venues", params)
+        return self._send_request("venues", params)
 
     def _send_request(self, path: str, params: Dict) -> Dict:
         params["key"] = self._apikey
@@ -33,11 +33,12 @@ class EdFestCli:
         ).hexdigest()
         signed_url = f"{url_to_sign}&signature={signature}"
         url_to_request = f"{EdFestCli.base_url}{signed_url}"
+        original_stderr = sys.stderr  # Save the original stderr
         with open("error.log", "a") as f:
             sys.stderr = f  # Redirect stderr to the file
 
             # Any stderr output now goes to 'error.log'
             print(url_to_request, file=sys.stderr)
-
+        sys.stderr = original_stderr  # Restore the original stderr
         response = requests.get(url_to_request)
         return response.json()
