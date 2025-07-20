@@ -1,6 +1,6 @@
 # edfringe-mcp
 
-An MCP server to query the Edinburgh Festivals API for information about events and venues for all the Edinburgh festivals.
+An MCP server to query the Edinburgh Festivals API for information about events and venues for all the Edinburgh festivals, inluding historical data
 
 ## Tools
 
@@ -40,6 +40,12 @@ An MCP server to query the Edinburgh Festivals API for information about events 
         ]
     }
     ```
+
+## Development
+
+Running test:
+
+    uv run pytest
 
 ## License
 
