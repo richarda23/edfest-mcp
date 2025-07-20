@@ -9,3 +9,18 @@ dependencies = [
     "python-dotenv>=1.1.1",
     "requests>=2.32.4",
 ]
+
+[dependency-groups]
+test = [
+    "pytest>=8.4.1",
+    "pytest-mock>=3.14.1",
+    "responses>=0.25.7",
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["."]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
