@@ -1,5 +1,5 @@
 import sys
-from typing import Dict
+from typing import Dict, List
 
 from dotenv import load_dotenv
 import os
@@ -17,11 +17,14 @@ class EdFestCli:
         load_dotenv()
         self._apikey = os.getenv("api_key")
         self._apisecret = os.getenv("api_secret")
+        self._fringe_mode = os.getenv("fringe_mode", "demo")
 
-    def events(self, params: Dict) -> Dict:
+    def events(self, params: Dict) -> List[Dict]:
+        if params.get("festival") == "fringe" and self._fringe_mode != "real":
+            params["festival"] = "demofringe"
         return self._send_request("events", params)
 
-    def venues(self, params: Dict):
+    def venues(self, params: Dict) -> List[Dict]:
         return self._send_request("venues", params)
 
     def _send_request(self, path: str, params: Dict) -> Dict:
