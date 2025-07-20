@@ -17,12 +17,6 @@ def main():
 mcp = FastMCP("My MCP Server")
 
 
-@mcp.tool
-def greet(name: str) -> str:
-    """Greets the person by name"""
-    return f"Hello, {name}!"
-
-
 @mcp.tool()
 def search_edinburgh_festivals(
     datetime_from="2025-09-01",
