@@ -43,8 +43,9 @@ An MCP server to query the Edinburgh Festivals API for information about events 
 
 ## Development
 
-Running test:
+Running tests:
 
+    uv sync --all-groups
     uv run pytest
 
 ## License
