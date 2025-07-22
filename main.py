@@ -49,6 +49,8 @@ def edinburgh_festival_events(
     search_text=None,
     title=None,
     artist=None,
+    number_of_results=25,
+    page=0,
     year="*",
 ) -> List[Dict]:
     """
@@ -62,6 +64,9 @@ def edinburgh_festival_events(
     :param artist:  Name of an artist or performer to search for.
     :param title: the title of the show to search for.
     :param year: The year of the festival. Defaults to "*", which means all years.
+    :param datetime_from: The start date and time for the search range.
+    :param number_of_results: The maximum number of results to retrieve, up to 100 at a time.
+    :param page: The page number for pagination, starting from 0.
     :return:
     """
     params = {
@@ -74,6 +79,8 @@ def edinburgh_festival_events(
         "description": search_text,
         "artist": artist,
         "title": title,
+        "size": number_of_results,
+        "page": page,
     }
     ## If year is "*", we remove the date filters
     if year == "*":
@@ -88,4 +95,4 @@ def edinburgh_festival_events(
 
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp.run(transport="stdio")
