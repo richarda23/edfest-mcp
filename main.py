@@ -18,6 +18,8 @@ def edinburgh_festival_venues(
     postcode: str = None,
     name: str = None,
     year: str = "2025",
+    number_of_results=25,
+    page=0,
 ) -> List[Dict]:
     """
     Searches Edinburgh festival venues.
@@ -26,12 +28,16 @@ def edinburgh_festival_venues(
     :param name: The name of the venue to search for.
     :param year: The year of the festival.
     :return: A dictionary containing venue information.
+    :param number_of_results: The maximum number of results to retrieve, up to 100 at a time.
+    :param page: The page number for pagination, starting from 0.
     """
     params = {
         "festival": festival,
         "year": year,
         "postcode": postcode,
         "name": name,
+        "size": number_of_results,
+        "page": page,
     }
     filtered_params = {k: v for k, v in params.items() if v}
 
