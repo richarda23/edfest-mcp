@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastmcp>=2.10.5",
+    "googlemaps>=4.10.0",
     "python-dotenv>=1.1.1",
     "requests>=2.32.4",
 ]

@@ -30,6 +30,7 @@ def edinburgh_festival_venues(
     :return: A dictionary containing venue information.
     :param number_of_results: The maximum number of results to retrieve, up to 100 at a time.
     :param page: The page number for pagination, starting from 0.
+    :
     """
     params = {
         "festival": festival,
