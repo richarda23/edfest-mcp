@@ -26,6 +26,13 @@ Note that access to  Fringe event data for 2025 is not yet supported; this requi
     api_key=your_key
     ```
 
+    If you have a Google Maps API key you can add
+
+    ```
+    GOOGLE_MAPS_API_KEY=your API key
+    ```
+    and that will enable timing and route calculations between venues. 
+
 3. Install dependencies:
     ```
     uv sync

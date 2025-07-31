@@ -6,10 +6,18 @@ import googlemaps
 
 
 class GMAPS:
-    def __init__(self, api_key):
-        self.gmaps = googlemaps.Client(key=api_key)
+    def __init__(self, api_key=None):
+        self.enabled = False
+        if api_key is None:
+            dotenv.load_dotenv()
+            api_key = os.getenv("GOOGLE_MAPS_API_KEY")
+            self.enabled = bool(api_key)
+        else:
+            self.enabled = True
+        if self.enabled:
+            self.gmaps = googlemaps.Client(key=api_key)
 
-    def get_directions(self, origin, destination, mode="WALKING"):
+    def get_directions(self, origin, destination, mode="walking"):
         directions_result = self.gmaps.directions(
             origin,
             destination,
@@ -20,9 +28,6 @@ class GMAPS:
             for step in leg["steps"]:
                 instructions.append(step["html_instructions"])
         ## get the distance and duration for all legs
-        for leg in directions_result[0]["legs"]:
-            print(f"Distance: {leg['distance']['text']}")
-            print(f"Duration: {leg['duration']['text']}")
         total_distance = sum(
             leg["distance"]["value"] for leg in directions_result[0]["legs"]
         )
@@ -31,8 +36,8 @@ class GMAPS:
         )
         return {
             "instructions": instructions,
-            "total_distance": total_distance,
-            "total_duration": total_duration,
+            "total_distance_meters": total_distance,
+            "total_duration_seconds": total_duration,
         }
 
     def get_distance(self, origin, destination):

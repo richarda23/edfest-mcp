@@ -4,9 +4,11 @@ from typing import Dict, List
 
 from fastmcp import FastMCP
 import edfestcli
+import gmaps
 
 
 cli = edfestcli.EdFestCli()
+gmaps_cli = gmaps.GMAPS()
 
 
 mcp = FastMCP("My MCP Server")
@@ -44,6 +46,28 @@ def edinburgh_festival_venues(
 
     results = cli.venues(filtered_params)
     return results
+
+
+@mcp.tool(description="Calculate route between venues")
+def edinburgh_festival_venue_routes(origin: str, destination: str) -> Dict:
+    """
+    Calculates the route between two venues.
+    :param origin: The starting venue
+    :param destination: The destination venue.
+    :return: A dictionary containing route information:.
+    """
+    gmaps_cli = gmaps.GMAPS()
+    if not gmaps_cli.enabled:
+        return {"error": "Google Maps API key is not set. This tool is not available."}
+    directions = gmaps_cli.get_directions(origin, destination, mode="walking")
+    return directions
+
+
+@mcp.prompt(description="Find a route between two venues in Edinburgh")
+def edinburgh_festival_venue_route_prompt(
+    start_location: str, destination: str, mode="walking"
+) -> str:
+    return f"""find a route between {start_location}, Edinburgh, UK and {destination}, Edinburgh, UK using {mode} mode of transport."""
 
 
 @mcp.tool()
