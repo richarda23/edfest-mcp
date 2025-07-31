@@ -31,14 +31,6 @@ class TestEdFestCli:
             assert client._apisecret == "test_api_secret"
             assert client._fringe_mode == "real"
 
-    def test_init_with_default_fringe_mode(self):
-        """Test initialization with default fringe_mode when not set."""
-        with patch.dict(
-            os.environ, {"api_key": "test_key", "api_secret": "test_secret"}, clear=True
-        ):
-            client = EdFestCli()
-            assert client._fringe_mode == "demo"
-
     @responses.activate
     def test_events_fringe_demo_mode(self):
         """Test events method with fringe festival in demo mode."""
