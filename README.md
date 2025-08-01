@@ -4,6 +4,9 @@ An MCP server to query the Edinburgh Festivals API for information about events 
 
 Note that access to  Fringe event data for 2025 is not yet supported; this requires approval.
 
+<a href="https://glama.ai/mcp/servers/@richarda23/edfest-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@richarda23/edfest-mcp/badge" alt="Edinburgh Festivals Server MCP server" />
+</a>
 
 ## Tools
 
