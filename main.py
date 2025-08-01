@@ -70,6 +70,11 @@ def edinburgh_festival_venue_route_prompt(
     return f"""find a route between {start_location}, Edinburgh, UK and {destination}, Edinburgh, UK using {mode} mode of transport."""
 
 
+@mcp.prompt(description="Ask about Edinburgh Fringe festival in 2025")
+def edinburgh_fringe_festival_2025_prompt(query: str) -> str:
+    return f"Answer this question about the Edinburgh Fringe festival in 2025: {query}"
+
+
 @mcp.tool()
 def edinburgh_festival_events(
     datetime_from="2025-01-01 00:00:00",
